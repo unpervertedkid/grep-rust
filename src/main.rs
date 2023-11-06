@@ -9,7 +9,7 @@ fn match_pattern(input_line: &str, pattern: &str) -> bool {
         match pattern {
             r"\d" => return match_single_digits(input_line),
             r"\w" => return match_alphanumeric(input_line),
-            _ => return input_line.contains(pattern),
+            _ => panic!("Unhandled pattern: {}", pattern),
         }
     }
 }
