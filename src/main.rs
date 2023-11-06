@@ -5,9 +5,24 @@ use std::process;
 fn match_pattern(input_line: &str, pattern: &str) -> bool {
     if pattern.chars().count() == 1 {
         return input_line.contains(pattern);
+    } else if pattern == r"\d" {
+        return match_single_digits(input_line);
     } else {
         panic!("Unhandled pattern: {}", pattern)
     }
+}
+
+fn match_single_digits(input_line: &str) -> bool {
+    let mut matched = false;
+
+    for c in input_line.chars() {
+        if c.is_digit(10) {
+            matched = true;
+            break;
+        }
+    }
+
+    matched
 }
 
 // Usage: echo <input_text> | your_grep.sh -E <pattern>
