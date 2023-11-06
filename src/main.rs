@@ -5,10 +5,12 @@ use std::process;
 fn match_pattern(input_line: &str, pattern: &str) -> bool {
     if pattern.chars().count() == 1 {
         return input_line.contains(pattern);
-    } else if pattern == r"\d" {
-        return match_single_digits(input_line);
     } else {
-        panic!("Unhandled pattern: {}", pattern)
+        match pattern {
+            r"\d" => return match_single_digits(input_line),
+            r"\w" => return match_alphanumeric(input_line),
+            _ => return input_line.contains(pattern),
+        }
     }
 }
 
@@ -17,6 +19,19 @@ fn match_single_digits(input_line: &str) -> bool {
 
     for c in input_line.chars() {
         if c.is_digit(10) {
+            matched = true;
+            break;
+        }
+    }
+
+    matched
+}
+
+fn match_alphanumeric(input_line: &str) -> bool {
+    let mut matched = false;
+
+    for c in input_line.chars() {
+        if c.is_alphanumeric() {
             matched = true;
             break;
         }
